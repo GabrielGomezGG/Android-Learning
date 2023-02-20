@@ -1,5 +1,6 @@
 package com.example.freegameapp.di
 
+import com.example.freegameapp.data.database.dao.GameDao
 import com.example.freegameapp.data.network.GameService
 import com.example.freegameapp.data.repository.GameRepository
 import com.example.freegameapp.data.repository.GameRepositoryImpl
@@ -32,8 +33,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRepository(gameService : GameService):GameRepository{
-        return GameRepositoryImpl(gameService)
+    fun provideRepository(gameService : GameService, gameDao: GameDao):GameRepository{
+        return GameRepositoryImpl(gameService, gameDao)
     }
     
 }

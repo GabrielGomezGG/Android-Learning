@@ -16,7 +16,7 @@ fun MainScreen(gameViewModel: GameViewModel) {
         GameUIState.Error -> Text(text = "error")
         GameUIState.Loading -> CircularProgressIndicator()
         is GameUIState.Success -> GamesListDisplay((games as GameUIState.Success).games)
-        null -> TODO()
+        else -> {}
     }
 }
 
