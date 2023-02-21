@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.freegameapp.data.database.dao.GameDao
 import com.example.freegameapp.data.database.entity.GameEntity
 
-@Database(entities = [GameEntity::class], version = 1)
+@Database(entities = [GameEntity::class], version = 2)
 abstract class GameDataBase : RoomDatabase() {
 
     abstract fun getGameDao():GameDao

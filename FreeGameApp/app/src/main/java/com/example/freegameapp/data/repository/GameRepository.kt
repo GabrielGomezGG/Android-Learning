@@ -1,5 +1,6 @@
 package com.example.freegameapp.data.repository
 
+import android.util.Log
 import com.example.freegameapp.data.database.dao.GameDao
 import com.example.freegameapp.data.database.entity.GameEntity
 import com.example.freegameapp.data.model.Game
@@ -10,8 +11,8 @@ interface GameRepository{
     suspend fun getGamesApi() : List<Game>
     suspend fun getGamesDB() : List<Game>
     suspend fun insertGames(games : List<GameEntity>)
-
     suspend fun clearGames()
+    suspend fun updateGame(id : Int, date : String)
 }
 
 class GameRepositoryImpl @Inject constructor(
@@ -36,5 +37,9 @@ class GameRepositoryImpl @Inject constructor(
 
     override suspend fun clearGames() {
         gameDao.deleteAllGames()
+    }
+
+    override suspend fun updateGame(id : Int, date : String) {
+        gameDao.updateDateGame(id,date)
     }
 }

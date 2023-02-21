@@ -1,5 +1,6 @@
 package com.example.freegameapp.domain
 
+import android.util.Log
 import com.example.freegameapp.data.database.entity.GameEntity
 import com.example.freegameapp.data.model.Game
 import com.example.freegameapp.data.repository.GameRepository
@@ -9,9 +10,10 @@ class GetAllGamesUserCase @Inject constructor(
     private val gameRepository: GameRepository
 ) {
     suspend operator fun invoke(): List<Game> {
-        val gameList = gameRepository.getGamesApi()
-        if (gameList.isNotEmpty()) {
-            gameRepository.clearGames()
+
+        val gameListDB = gameRepository.getGamesDB()
+        return if (gameListDB.isEmpty()) {
+            val gameList = gameRepository.getGamesApi()
             gameRepository.insertGames(gameList.map {
                 GameEntity(
                     it.id, it.developer, it.gameUrl,
@@ -19,8 +21,10 @@ class GetAllGamesUserCase @Inject constructor(
                     it.releaseDate, it.shortDescription, it.thumbnail, it.title
                 )
             })
-            return gameList
+            gameRepository.updateGame(405, "2014-03-01")
+            gameRepository.getGamesDB()
+        } else {
+            gameRepository.getGamesDB()
         }
-        return gameRepository.getGamesDB()
     }
 }
