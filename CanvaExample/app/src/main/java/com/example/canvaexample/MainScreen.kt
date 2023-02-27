@@ -1,40 +1,46 @@
 package com.example.canvaexample
 
 import android.util.Log
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import kotlin.random.Random
 
 @Preview
 @Composable
 fun MainScreen() {
     val lista = listOf(
-        Graphics("titi",100f),
-        Graphics("titi2",140f),
-        Graphics("titi3",205f),
-        Graphics("titi4",120f),
-        Graphics("titi5",50f),
+        Graphics("titi", 100f),
+        Graphics("titi2", 140f),
+        Graphics("titi3", 205f),
+        Graphics("titi4", 120f),
+        Graphics("titi5", 50f),
+        Graphics("titi5", 95f),
+        Graphics("titi5", 30f),
     )
-    Grafico(lista = lista)
+    Grafico(lista)
+
 
 }
 
 @Composable
 fun Grafico(
-    lista : List<Graphics>
+    lista: List<Graphics>,
 ) {
 
     val maxFrecuencia = lista.map { it.frecuencia }.sum()
-    val aux1 =   360/maxFrecuencia
+    val aux1 = 360 / maxFrecuencia
     val gradosList = lista.map { it.frecuencia * aux1 }
     Log.i("tito", gradosList.sum().toString())
     val aux2 = 100 / maxFrecuencia
@@ -57,7 +63,7 @@ fun Grafico(
     Canvas(
         modifier = Modifier.fillMaxSize()
     ) {
-        repeat(listaSize){
+        repeat(listaSize) {
             drawArc(
                 color = colors[it],
                 startAngle = anterior,
