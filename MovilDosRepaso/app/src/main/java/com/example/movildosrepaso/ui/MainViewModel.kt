@@ -5,11 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movildosrepaso.data.ApiRetrofit
+import com.example.movildosrepaso.data.ApiService
 import com.example.movildosrepaso.data.model.Post
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val apiService : ApiService
+) : ViewModel() {
 
     private val _post = MutableLiveData<List<Post>>()
     val post: LiveData<List<Post>> = _post
@@ -18,17 +23,14 @@ class MainViewModel : ViewModel() {
         getPost()
     }
 
-    fun getPost() {
-
-        var po: List<Post>
-
+    private fun getPost() {
         viewModelScope.launch {
-            if(ApiRetrofit.getApi.getPosts().isSuccessful){
-                po = ApiRetrofit.getApi.getPosts().body()!!
+            if(apiService.getPosts().isSuccessful){
+                val po = apiService.getPosts().body()!!
                 _post.value = po
 
             }else{
-                Log.e("titi", "FAIL")
+                //TODO: ERROR
             }
         }
     }
