@@ -15,8 +15,8 @@ class MainViewModel @Inject constructor(
     private val apiService : ApiService
 ) : ViewModel() {
 
-    private val _post = MutableLiveData<List<Post>>()
-    val post: LiveData<List<Post>> = _post
+    private val _post = MutableLiveData<ResponseUiState>(ResponseUiState.Loading)
+    val post: LiveData<ResponseUiState> = _post
 
     init {
         getPost()
@@ -26,10 +26,10 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             if(apiService.getPosts().isSuccessful){
                 val po = apiService.getPosts().body()!!
-                _post.value = po
+                _post.value = ResponseUiState.Success(po)
 
             }else{
-                //TODO: ERROR
+                _post.value = ResponseUiState.Error("Error")
             }
         }
     }
