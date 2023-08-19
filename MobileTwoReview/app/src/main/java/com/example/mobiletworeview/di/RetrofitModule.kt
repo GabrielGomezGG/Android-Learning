@@ -1,8 +1,8 @@
 package com.example.mobiletworeview.di
 
-import com.example.mobiletworeview.data.ApiRepository
+import com.example.mobiletworeview.data.PostRepository
 import com.example.mobiletworeview.data.ApiService
-import com.example.mobiletworeview.data.IApiRepository
+import com.example.mobiletworeview.data.ApiPostRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,17 +24,5 @@ class RetrofitModule {
             .baseUrl(apiUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideApiService(retrofit : Retrofit) : ApiService {
-        return retrofit.create(ApiService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideApiRepository(apiService: ApiService) : ApiRepository {
-        return IApiRepository(apiService)
     }
 }

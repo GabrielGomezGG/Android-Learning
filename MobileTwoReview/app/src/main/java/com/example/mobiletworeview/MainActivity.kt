@@ -7,10 +7,8 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.mobiletworeview.ui.MainScreen
 import com.example.mobiletworeview.ui.MainViewModel
 import com.example.mobiletworeview.ui.theme.MobileTwoReviewTheme
 import dagger.hilt.android.AndroidEntryPoint
