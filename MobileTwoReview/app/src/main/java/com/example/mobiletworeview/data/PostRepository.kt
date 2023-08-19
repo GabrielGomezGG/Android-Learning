@@ -11,15 +11,12 @@ class ApiPostRepository @Inject constructor(
     private val apiService: ApiService
 ) : PostRepository{
     override suspend fun getPost(): List<Post> {
-        try {
-            val response = apiService.getPosts()
-            if (response.isSuccessful) {
-                return response.body() ?: emptyList()
-            }
+        return try {
+            return apiService.getPosts().body()!!
         } catch (e: Exception) {
-            e.printStackTrace()
+            return emptyList()
         }
-        return emptyList()
+
     }
 
 }
