@@ -1,6 +1,8 @@
 package com.example.mobiletworeview.di
 
+import com.example.mobiletworeview.data.ApiRepository
 import com.example.mobiletworeview.data.ApiService
+import com.example.mobiletworeview.data.IApiRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,5 +30,11 @@ class RetrofitModule {
     @Provides
     fun provideApiService(retrofit : Retrofit) : ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideApiRepository(apiService: ApiService) : ApiRepository {
+        return IApiRepository(apiService)
     }
 }
