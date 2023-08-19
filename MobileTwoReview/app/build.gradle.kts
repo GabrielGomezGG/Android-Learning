@@ -79,6 +79,13 @@ dependencies {
 
     //livedata compose
     implementation ("androidx.compose.runtime:runtime-livedata:1.3.1")
+
+
+    //Corrutines
+    //implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+    //Test LiveData
+    //testImplementation "androidx.arch.core:core-testing:2.1.0"
 }
 
 kapt {
