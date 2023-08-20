@@ -24,8 +24,8 @@ class PostModule {
 
     @Singleton
     @Provides
-    fun providePostRepository(apiService: ApiService, postDao: PostDao) : PostRepository {
-        return ApiPostRepository(apiService, postDao)
+    fun providePostRepository(apiService: ApiService) : PostRepository {
+        return ApiPostRepository(apiService)
     }
 
     @Singleton

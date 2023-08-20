@@ -1,0 +1,43 @@
+package com.example.mobiletworeview.data.db
+
+import androidx.lifecycle.LiveData
+import com.example.mobiletworeview.data.db.entity.PostEntity
+
+interface PostDBRepository {
+
+    fun getPostFromDB(): LiveData<List<PostEntity>>
+
+    suspend fun setPostToDatabase(posts: List<PostEntity>)
+
+    suspend fun deletePosts()
+
+    suspend fun deletePost(post: PostEntity)
+
+    suspend fun addPost(post: PostEntity)
+
+}
+
+class PostDBRepositoryImpl(
+    private val postDao: PostDao
+) : PostDBRepository {
+
+    override fun getPostFromDB(): LiveData<List<PostEntity>> {
+        return postDao.getPost()
+    }
+
+    override suspend fun setPostToDatabase(posts: List<PostEntity>) {
+        postDao.insertPost(posts)
+    }
+
+    override suspend fun deletePosts() {
+        postDao.deleteAllPost()
+    }
+
+    override suspend fun addPost(post: PostEntity) {
+        postDao.addPost(post)
+    }
+
+    override suspend fun deletePost(post: PostEntity) {
+        postDao.deletePost(post)
+    }
+}

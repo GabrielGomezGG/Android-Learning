@@ -9,14 +9,11 @@ import javax.inject.Inject
 interface PostRepository {
     suspend fun getPost() : List<Post>?
 
-    suspend fun getPostFromDB() : List<Post>
 
-    suspend fun setPostToDatabase(posts : List<PostEntity>)
 }
 
 class ApiPostRepository @Inject constructor(
-    private val apiService: ApiService,
-    private val postDao: PostDao
+    private val apiService: ApiService
 ) : PostRepository{
     override suspend fun getPost(): List<Post>? {
         return try {
@@ -27,16 +24,6 @@ class ApiPostRepository @Inject constructor(
 
     }
 
-    override suspend fun getPostFromDB(): List<Post> {
-        var post : List<PostEntity> = emptyList()
-        postDao.getPost().collect{
-            post = it
-        }
-        return post.map { it.toPost() }
-    }
 
-    override suspend fun setPostToDatabase(posts: List<PostEntity>) {
-        postDao.setPosts(posts)
-    }
 
 }

@@ -7,13 +7,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.mobiletworeview.data.db.entity.PostEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PostDao {
 
     @Query("select * from post_entity order by id asc")
-    fun getPost () : Flow<List<PostEntity>>
+    fun getPost () : LiveData<List<PostEntity>>
 
     @Delete
     suspend fun deletePost(post : PostEntity)
@@ -24,7 +23,7 @@ interface PostDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addPost(post: PostEntity)
 
-    @Insert
-    suspend fun setPosts(posts : List<PostEntity>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPost(posts : List<PostEntity>)
 
 }
