@@ -86,6 +86,10 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
     //Test LiveData
     //testImplementation "androidx.arch.core:core-testing:2.1.0"
+
+    //Room
+    implementation ("androidx.room:room-ktx:2.5.0")
+    kapt ("androidx.room:room-compiler:2.5.0")
 }
 
 kapt {
