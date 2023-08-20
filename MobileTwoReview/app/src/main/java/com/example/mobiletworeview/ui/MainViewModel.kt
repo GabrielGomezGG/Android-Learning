@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    //private val apiRepository: PostRepository
     private val getPostUseCase: GetPostUseCase
 ) : ViewModel() {
 
@@ -24,7 +23,6 @@ class MainViewModel @Inject constructor(
 
     private fun getPost() {
         viewModelScope.launch {
-            //_post.value = ResponseUiState.Success(apiRepository.getPost())
             _post.value = getPostUseCase()
         }
     }

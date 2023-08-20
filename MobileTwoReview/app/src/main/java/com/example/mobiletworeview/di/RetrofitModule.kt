@@ -1,8 +1,5 @@
 package com.example.mobiletworeview.di
 
-import com.example.mobiletworeview.data.PostRepository
-import com.example.mobiletworeview.data.ApiService
-import com.example.mobiletworeview.data.ApiPostRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
