@@ -1,6 +1,7 @@
 package com.example.mobiletworeview.data
 
-import com.example.mobiletworeview.data.model.Post
+import com.example.mobiletworeview.data.api.ApiService
+import com.example.mobiletworeview.data.api.model.Post
 import com.example.mobiletworeview.fake.FakeApiService
 import com.example.mobiletworeview.fake.FakeApiServiceFail
 import com.example.mobiletworeview.fake.FakeDataSource

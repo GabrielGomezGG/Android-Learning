@@ -1,6 +1,6 @@
 package com.example.mobiletworeview.fake
 
-import com.example.mobiletworeview.data.model.Post
+import com.example.mobiletworeview.data.api.model.Post
 import retrofit2.Response
 
 object FakeDataSource {

@@ -1,7 +1,7 @@
 package com.example.mobiletworeview.fake
 
-import com.example.mobiletworeview.data.ApiService
-import com.example.mobiletworeview.data.model.Post
+import com.example.mobiletworeview.data.api.ApiService
+import com.example.mobiletworeview.data.api.model.Post
 import retrofit2.Response
 
 class FakeApiService : ApiService {
@@ -10,7 +10,7 @@ class FakeApiService : ApiService {
     }
 }
 
-class FakeApiServiceFail : ApiService{
+class FakeApiServiceFail : ApiService {
     override suspend fun getPosts(): Response<List<Post>> {
         return Response.error(500, null)
     }
