@@ -3,6 +3,7 @@ package com.example.mobiletworeview.di
 import com.example.mobiletworeview.data.ApiPostRepository
 import com.example.mobiletworeview.data.api.ApiService
 import com.example.mobiletworeview.data.PostRepository
+import com.example.mobiletworeview.data.db.PostDao
 import com.example.mobiletworeview.domain.GetPostUseCase
 import dagger.Module
 import dagger.Provides
@@ -23,8 +24,8 @@ class PostModule {
 
     @Singleton
     @Provides
-    fun providePostRepository(apiService: ApiService) : PostRepository {
-        return ApiPostRepository(apiService)
+    fun providePostRepository(apiService: ApiService, postDao: PostDao) : PostRepository {
+        return ApiPostRepository(apiService, postDao)
     }
 
     @Singleton

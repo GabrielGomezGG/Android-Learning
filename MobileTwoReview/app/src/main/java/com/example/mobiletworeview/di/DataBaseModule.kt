@@ -7,6 +7,7 @@ import com.example.mobiletworeview.data.db.PostDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -16,7 +17,7 @@ class DataBaseModule {
 
     @Singleton
     @Provides
-    fun roomProvide(applicationContext : Context) : AppDataBase {
+    fun roomProvide(@ApplicationContext applicationContext: Context) : AppDataBase {
         return Room.databaseBuilder(
             applicationContext,
             AppDataBase::class.java, "app_database"
