@@ -7,7 +7,9 @@ interface PostDBRepository {
 
     fun getPostFromDB(): LiveData<List<PostEntity>>
 
-    suspend fun setPostToDatabase(posts: List<PostEntity>)
+    suspend fun getAllPost(): List<PostEntity>
+
+    suspend fun setPosts(posts: List<PostEntity>)
 
     suspend fun deletePosts()
 
@@ -25,7 +27,11 @@ class PostDBRepositoryImpl(
         return postDao.getPost()
     }
 
-    override suspend fun setPostToDatabase(posts: List<PostEntity>) {
+    override suspend fun getAllPost(): List<PostEntity> {
+        return postDao.getAllPost()
+    }
+
+    override suspend fun setPosts(posts: List<PostEntity>) {
         postDao.insertPost(posts)
     }
 

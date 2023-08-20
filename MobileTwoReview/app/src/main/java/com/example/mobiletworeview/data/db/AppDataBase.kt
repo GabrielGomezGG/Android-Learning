@@ -6,7 +6,7 @@ import com.example.mobiletworeview.data.db.entity.PostEntity
 
 @Database(
     entities = [PostEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {

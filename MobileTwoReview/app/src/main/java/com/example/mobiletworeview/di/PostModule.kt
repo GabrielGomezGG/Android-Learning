@@ -1,9 +1,9 @@
 package com.example.mobiletworeview.di
 
 import com.example.mobiletworeview.data.ApiPostRepository
-import com.example.mobiletworeview.data.api.ApiService
 import com.example.mobiletworeview.data.PostRepository
-import com.example.mobiletworeview.data.db.PostDao
+import com.example.mobiletworeview.data.api.ApiService
+import com.example.mobiletworeview.data.db.PostDBRepository
 import com.example.mobiletworeview.domain.GetPostUseCase
 import dagger.Module
 import dagger.Provides
@@ -30,8 +30,8 @@ class PostModule {
 
     @Singleton
     @Provides
-    fun provideGetPostUseCase(postRepository: PostRepository) : GetPostUseCase {
-        return GetPostUseCase(postRepository)
+    fun provideGetPostUseCase(postRepository: PostRepository, postDBRepository: PostDBRepository) : GetPostUseCase {
+        return GetPostUseCase(postRepository, postDBRepository)
     }
 
 }

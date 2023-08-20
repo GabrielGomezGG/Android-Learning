@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -49,6 +50,16 @@ fun MainScreen(mainViewModel : MainViewModel) {
                 Modifier
                     .fillMaxSize()
                     .padding(vertical = 0.dp)) {
+                item {
+                    Button(onClick = { mainViewModel.setPost() }) {
+                        Text(text = "SET")
+                    }
+                }
+                item {
+                    Button(onClick = { mainViewModel.getAllPost() }) {
+                        Text(text = "GET")
+                    }
+                }
                 items(post){
                     PostView(it)
                 }
