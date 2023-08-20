@@ -11,7 +11,7 @@ class GetPostUseCase @Inject constructor(
 
         val post = postRepository.getPost()
 
-        if(post.isEmpty()){
+        if(post.isNullOrEmpty()){
             return ResponseUiState.Error("Data is empty")
         }
 

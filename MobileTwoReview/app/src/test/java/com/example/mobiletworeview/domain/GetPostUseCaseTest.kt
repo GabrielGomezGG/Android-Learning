@@ -29,17 +29,17 @@ class GetPostUseCaseTest{
     }
 
     @Test
-    fun `when getPostUseCase is called then return a list of post with error`() = runTest{
+    fun `when getPostUseCase is called with a null o emptyList then return ResponseUiStateError`() = runTest{
         // Given
         fakePostRepository = FakePostRepositoryFail()
         getPostUseCase = GetPostUseCase(fakePostRepository)
 
         // When
         val result = getPostUseCase()
-        val expected = ResponseUiState.Error()
+        val expected = ResponseUiState.Error("Data is empty")
 
         // Then
-        Assert.assertNotEquals(result, expected)
+        Assert.assertEquals(result, expected)
     }
 
 }
