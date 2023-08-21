@@ -11,7 +11,7 @@ import com.example.mobiletworeview.data.db.entity.PostEntity
 @Dao
 interface PostDao {
 
-    @Query("select * from post_entity order by id asc")
+    @Query("select * from post_entity order by id desc")
     fun getPost () : LiveData<List<PostEntity>>
 
     @Query("select * from post_entity")

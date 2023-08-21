@@ -22,24 +22,25 @@ class MainViewModel @Inject constructor(
     private val _post = MutableLiveData<ResponseUiState>(ResponseUiState.Loading)
     val post: LiveData<ResponseUiState> = _post
 
-    private val _postDB : LiveData<List<PostEntity>> = postDBRepository.getPostFromDB()
-    val postDB : LiveData<List<PostEntity>> = _postDB
-
     init {
         getPost()
     }
 
     private fun getPost() {
         viewModelScope.launch {
-            _post.value = getPostUseCase()
+
+            if(getPostUseCase() == null){
+                _post.value = ResponseUiState.Error("Error")
+            }else{
+                _post.value = ResponseUiState.Success(getPostUseCase()!!)
+            }
+
         }
     }
 
-    fun getAllPost(){
-        viewModelScope.launch(Dispatchers.IO) {
-            postDBRepository.getAllPost().forEach {
-                Log.i("titi", it.title)
-            }
+    fun deletePost(){
+        viewModelScope.launch {
+            postDBRepository.deletePosts()
         }
     }
 

@@ -20,7 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.mobiletworeview.data.api.model.Post
+import com.example.mobiletworeview.data.db.entity.PostEntity
 
 @Composable
 fun MainScreen(mainViewModel : MainViewModel) {
@@ -42,9 +42,11 @@ fun MainScreen(mainViewModel : MainViewModel) {
 
             }
         }
-        is ResponseUiState.Success<*> -> {
+        is ResponseUiState.Success -> {
 
-            val post = (postResponse as ResponseUiState.Success<*>).response as List<Post>
+            val posts  by (postResponse as ResponseUiState.Success).response.observeAsState()
+
+            //val post = (postResponse as ResponseUiState.Success<*>).response as List<Post>
 
             LazyColumn(
                 Modifier
@@ -56,12 +58,14 @@ fun MainScreen(mainViewModel : MainViewModel) {
                     }
                 }
                 item {
-                    Button(onClick = { mainViewModel.getAllPost() }) {
-                        Text(text = "GET")
+                    Button(onClick = { mainViewModel.deletePost() }) {
+                        Text(text = "DELETE")
                     }
                 }
-                items(post){
-                    PostView(it)
+                if (!posts.isNullOrEmpty()){
+                    items(posts!!){
+                        PostView(it)
+                    }
                 }
             }
         }
@@ -71,7 +75,7 @@ fun MainScreen(mainViewModel : MainViewModel) {
 }
 
 @Composable
-fun PostView(post : Post) {
+fun PostView(post : PostEntity) {
     Card(
         modifier = Modifier.padding(8.dp),
     ) {
