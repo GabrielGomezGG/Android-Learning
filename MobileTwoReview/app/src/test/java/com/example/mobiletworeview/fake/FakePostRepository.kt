@@ -11,6 +11,6 @@ class FakePostRepository : PostRepository {
 
 class FakePostRepositoryFail : PostRepository{
     override suspend fun getPost(): List<Post>? {
-        return null
+        return emptyList()
     }
 }

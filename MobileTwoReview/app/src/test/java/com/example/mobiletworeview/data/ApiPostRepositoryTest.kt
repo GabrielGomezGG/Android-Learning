@@ -35,7 +35,7 @@ class ApiPostRepositoryTest{
 
         postRepository = ApiPostRepository(fakeApiService)
 
-        val expected = emptyList<Post>()
+        val expected = null
 
         val obtained = postRepository.getPost()
 
