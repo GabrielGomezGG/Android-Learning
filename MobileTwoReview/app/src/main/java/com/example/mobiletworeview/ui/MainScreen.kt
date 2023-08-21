@@ -44,7 +44,7 @@ fun MainScreen(mainViewModel : MainViewModel) {
         }
         is ResponseUiState.Success -> {
 
-            val posts  by (postResponse as ResponseUiState.Success).response.observeAsState()
+            val posts  by (postResponse as ResponseUiState.Success<List<PostEntity>>).response.observeAsState()
 
             //val post = (postResponse as ResponseUiState.Success<*>).response as List<Post>
 

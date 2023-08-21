@@ -19,8 +19,8 @@ class MainViewModel @Inject constructor(
     private val postDBRepository: PostDBRepository
 ) : ViewModel() {
 
-    private val _post = MutableLiveData<ResponseUiState>(ResponseUiState.Loading)
-    val post: LiveData<ResponseUiState> = _post
+    private val _post = MutableLiveData<ResponseUiState<List<PostEntity>>>(ResponseUiState.Loading)
+    val post: LiveData<ResponseUiState<List<PostEntity>>> = _post
 
     init {
         getPost()
