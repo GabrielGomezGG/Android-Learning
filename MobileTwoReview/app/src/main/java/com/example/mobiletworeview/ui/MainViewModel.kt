@@ -15,38 +15,37 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getPostUseCase: GetPostUseCase,
-    private val postDBRepository: PostDBRepository
+    private val getPostUseCase: GetPostUseCase
 ) : ViewModel() {
 
-    private val _post = MutableLiveData<ResponseUiState<List<PostEntity>>>(ResponseUiState.Loading)
-    val post: LiveData<ResponseUiState<List<PostEntity>>> = _post
+    private val _post = MutableLiveData<ResponseUiState>(ResponseUiState.Loading)
+    val post: LiveData<ResponseUiState> = _post
 
-    init {
-        getPost()
-    }
+//    init {
+//        getPost()
+//    }
 
-    private fun getPost() {
-        viewModelScope.launch {
+    fun getPost() {
+        viewModelScope.launch(Dispatchers.IO) {
 
             if(getPostUseCase() == null){
-                _post.value = ResponseUiState.Error("Error")
+                _post.postValue(ResponseUiState.Error("Error"))
             }else{
-                _post.value = ResponseUiState.Success(getPostUseCase()!!)
+                _post.postValue(ResponseUiState.Success(getPostUseCase()!!))
             }
 
         }
     }
 
     fun deletePost(){
-        viewModelScope.launch {
-            postDBRepository.deletePosts()
-        }
+//        viewModelScope.launch {
+//            postDBRepository.deletePosts()
+//        }
     }
 
     fun setPost(){
-        viewModelScope.launch {
-            postDBRepository.addPost(PostEntity(userId = 1, title = "title", body = "body"))
-        }
+//        viewModelScope.launch {
+//            postDBRepository.addPost(PostEntity(userId = 1, title = "title", body = "body"))
+//        }
     }
 }

@@ -2,6 +2,7 @@ package com.example.mobiletworeview.data.db
 
 import androidx.lifecycle.LiveData
 import com.example.mobiletworeview.data.db.entity.PostEntity
+import javax.inject.Inject
 
 interface PostDBRepository {
 
@@ -19,7 +20,7 @@ interface PostDBRepository {
 
 }
 
-class PostDBRepositoryImpl(
+class PostDBRepositoryImpl @Inject constructor(
     private val postDao: PostDao
 ) : PostDBRepository {
 

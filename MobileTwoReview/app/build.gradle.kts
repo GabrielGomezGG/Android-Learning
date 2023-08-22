@@ -82,10 +82,10 @@ dependencies {
 
 
     //Corrutines
-    //implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
     //Test LiveData
-    testImplementation ("androidx.arch.core:core-testing:2.1.0")
+    testImplementation ("androidx.arch.core:core-testing:2.2.0")
 
     //mockk
     testImplementation ("io.mockk:mockk:1.12.2")

@@ -14,6 +14,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -24,6 +25,10 @@ import com.example.mobiletworeview.data.db.entity.PostEntity
 
 @Composable
 fun MainScreen(mainViewModel : MainViewModel) {
+
+    LaunchedEffect(Unit){
+        mainViewModel.getPost()
+    }
 
     val postResponse by mainViewModel.post.observeAsState(ResponseUiState.Loading)
 
@@ -44,7 +49,7 @@ fun MainScreen(mainViewModel : MainViewModel) {
         }
         is ResponseUiState.Success -> {
 
-            val posts  by (postResponse as ResponseUiState.Success<List<PostEntity>>).response.observeAsState()
+            val posts  by (postResponse as ResponseUiState.Success).response.observeAsState()
 
             //val post = (postResponse as ResponseUiState.Success<*>).response as List<Post>
 
