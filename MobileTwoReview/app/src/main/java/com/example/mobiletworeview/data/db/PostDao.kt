@@ -7,12 +7,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.mobiletworeview.data.db.entity.PostEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PostDao {
 
     @Query("select * from post_entity order by id desc")
-    fun getPost () : LiveData<List<PostEntity>>
+    fun getPost () : Flow<List<PostEntity>>
 
     @Query("select * from post_entity")
     suspend fun getAllPost () : List<PostEntity>

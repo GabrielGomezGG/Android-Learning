@@ -2,11 +2,12 @@ package com.example.mobiletworeview.data.db
 
 import androidx.lifecycle.LiveData
 import com.example.mobiletworeview.data.db.entity.PostEntity
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface PostDBRepository {
 
-    fun getPostFromDB(): LiveData<List<PostEntity>>
+    fun getPostFromDB(): Flow<List<PostEntity>>
 
     suspend fun getAllPost(): List<PostEntity>
 
@@ -24,7 +25,7 @@ class PostDBRepositoryImpl @Inject constructor(
     private val postDao: PostDao
 ) : PostDBRepository {
 
-    override fun getPostFromDB(): LiveData<List<PostEntity>> {
+    override fun getPostFromDB(): Flow<List<PostEntity>> {
         return postDao.getPost()
     }
 

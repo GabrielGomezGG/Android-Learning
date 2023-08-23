@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -30,7 +31,8 @@ fun MainScreen(mainViewModel : MainViewModel) {
         mainViewModel.getPost()
     }
 
-    val postResponse by mainViewModel.post.observeAsState(ResponseUiState.Loading)
+//    val postResponse by mainViewModel.post.observeAsState(ResponseUiState.Loading)
+    val postResponse by mainViewModel.posts.collectAsState()
 
     when(postResponse){
         is ResponseUiState.Loading -> {
@@ -49,7 +51,7 @@ fun MainScreen(mainViewModel : MainViewModel) {
         }
         is ResponseUiState.Success -> {
 
-            val posts  by (postResponse as ResponseUiState.Success).response.observeAsState()
+            //val posts  by (postResponse as ResponseUiState.Success).response.observeAsState()
 
             //val post = (postResponse as ResponseUiState.Success<*>).response as List<Post>
 
@@ -67,11 +69,14 @@ fun MainScreen(mainViewModel : MainViewModel) {
                         Text(text = "DELETE")
                     }
                 }
-                if (!posts.isNullOrEmpty()){
-                    items(posts!!){
-                        PostView(it)
-                    }
+                items((postResponse as ResponseUiState.Success).response){
+                    PostView(it)
                 }
+//                if (!posts.isNullOrEmpty()){
+//                    items(posts!!){
+//                        PostView(it)
+//                    }
+//                }
             }
         }
     }

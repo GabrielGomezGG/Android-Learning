@@ -10,16 +10,24 @@ import com.example.mobiletworeview.data.db.entity.PostEntity
 import com.example.mobiletworeview.domain.GetPostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getPostUseCase: GetPostUseCase
+    private val getPostUseCase: GetPostUseCase,
+    private val postDBRepository: PostDBRepository
 ) : ViewModel() {
 
-    private val _post = MutableLiveData<ResponseUiState>(ResponseUiState.Loading)
-    val post: LiveData<ResponseUiState> = _post
+//    private val _post = MutableLiveData<ResponseUiState>(ResponseUiState.Loading)
+//    val post: LiveData<ResponseUiState> = _post
+
+    private val _posts = MutableStateFlow<ResponseUiState>(ResponseUiState.Loading)
+    val posts : StateFlow<ResponseUiState> = _posts
 
 //    init {
 //        getPost()
@@ -27,25 +35,34 @@ class MainViewModel @Inject constructor(
 
     fun getPost() {
         viewModelScope.launch(Dispatchers.IO) {
-
-            if(getPostUseCase() == null){
-                _post.postValue(ResponseUiState.Error("Error"))
-            }else{
-                _post.postValue(ResponseUiState.Success(getPostUseCase()!!))
+            try{
+                getPostUseCase()
+                    .catch { _posts.value = ResponseUiState.Error("AAAAAAAAAAAAAA") }
+                    .collect{
+                        _posts.value = ResponseUiState.Success(it)
+                    }
+            }catch (e : Exception){
+                _posts.value = ResponseUiState.Error()
             }
+
+//            if(getPostUseCase() == null){
+//                _post.postValue(ResponseUiState.Error("Error"))
+//            }else{
+//                _post.postValue(ResponseUiState.Success(getPostUseCase()!!))
+//            }
 
         }
     }
 
     fun deletePost(){
-//        viewModelScope.launch {
-//            postDBRepository.deletePosts()
-//        }
+        viewModelScope.launch {
+            postDBRepository.deletePosts()
+        }
     }
 
     fun setPost(){
-//        viewModelScope.launch {
-//            postDBRepository.addPost(PostEntity(userId = 1, title = "title", body = "body"))
-//        }
+        viewModelScope.launch {
+            postDBRepository.addPost(PostEntity(userId = 1, title = "title", body = "body"))
+        }
     }
 }
