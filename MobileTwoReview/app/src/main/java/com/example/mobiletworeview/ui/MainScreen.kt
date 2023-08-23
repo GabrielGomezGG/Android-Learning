@@ -17,12 +17,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.mobiletworeview.data.db.entity.PostEntity
+import com.example.mobiletworeview.data.Post
 
 @Composable
 fun MainScreen(mainViewModel : MainViewModel) {
@@ -85,7 +84,7 @@ fun MainScreen(mainViewModel : MainViewModel) {
 }
 
 @Composable
-fun PostView(post : PostEntity) {
+fun PostView(post : Post) {
     Card(
         modifier = Modifier.padding(8.dp),
     ) {

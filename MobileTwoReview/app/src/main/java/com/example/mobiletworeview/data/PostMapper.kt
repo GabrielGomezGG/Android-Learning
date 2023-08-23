@@ -1,9 +1,9 @@
 package com.example.mobiletworeview.data
 
-import com.example.mobiletworeview.data.api.model.Post
+import com.example.mobiletworeview.data.api.model.PostResponse
 import com.example.mobiletworeview.data.db.entity.PostEntity
 
-fun Post.toPostEntity() : PostEntity{
+fun PostResponse.toPostEntity() : PostEntity{
     return PostEntity(
         id, userId, title, body
     )

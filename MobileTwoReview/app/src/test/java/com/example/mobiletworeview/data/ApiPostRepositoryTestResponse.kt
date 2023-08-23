@@ -1,7 +1,6 @@
 package com.example.mobiletworeview.data
 
 import com.example.mobiletworeview.data.api.ApiService
-import com.example.mobiletworeview.data.api.model.Post
 import com.example.mobiletworeview.fake.FakeApiService
 import com.example.mobiletworeview.fake.FakeApiServiceFail
 import com.example.mobiletworeview.fake.FakeDataSource
@@ -9,7 +8,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
 
-class ApiPostRepositoryTest{
+class ApiPostRepositoryTestResponse{
 
     private lateinit var postRepository: PostRepository
     private lateinit var fakeApiService: ApiService

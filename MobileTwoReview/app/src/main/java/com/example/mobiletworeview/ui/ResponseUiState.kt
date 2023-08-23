@@ -1,10 +1,9 @@
 package com.example.mobiletworeview.ui
 
-import androidx.lifecycle.LiveData
-import com.example.mobiletworeview.data.db.entity.PostEntity
+import com.example.mobiletworeview.data.Post
 
 sealed interface ResponseUiState{
     object Loading : ResponseUiState
-    data class Success(val response : List<PostEntity>) : ResponseUiState
+    data class Success(val response : List<Post>) : ResponseUiState
     data class Error(val message : String = "Error") : ResponseUiState
 }

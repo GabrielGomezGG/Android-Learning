@@ -1,4 +1,4 @@
-package com.example.mobiletworeview.data.api.model
+package com.example.mobiletworeview.data
 
 data class Post(
     val id: Int,

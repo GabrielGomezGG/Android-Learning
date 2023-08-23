@@ -14,7 +14,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class GetPostUseCaseTest{
+class GetPostUseCaseTestResponse{
 
     private lateinit var getPostUseCase: GetPostUseCase
     private lateinit var fakePostRepository: PostRepository
