@@ -2,16 +2,18 @@ package com.example.mobiletworeview.fake
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.mobiletworeview.data.Post
 import com.example.mobiletworeview.data.db.PostDBRepository
 import com.example.mobiletworeview.data.db.entity.PostEntity
+import kotlinx.coroutines.flow.Flow
 
 class FakePostDBRepository : PostDBRepository {
-    override fun getPostFromDB(): LiveData<List<PostEntity>> {
+    override fun getPostFromDB(): Flow<List<Post>> {
         return FakeDataSource.fakePostDB
     }
 
     override suspend fun getAllPost(): List<PostEntity> {
-        return FakeDataSource.fakePostDB.value!!
+        return FakeDataSource.fakeAllPost
     }
 
     override suspend fun setPosts(posts: List<PostEntity>) {
@@ -28,31 +30,5 @@ class FakePostDBRepository : PostDBRepository {
 
     override suspend fun addPost(post: PostEntity) {
         TODO("Not yet implemented")
-    }
-}
-
-class FakePostDBRepositoryFail : PostDBRepository{
-    override fun getPostFromDB(): LiveData<List<PostEntity>> {
-        return MutableLiveData(emptyList())
-    }
-
-    override suspend fun getAllPost(): List<PostEntity> {
-        return emptyList()
-    }
-
-    override suspend fun setPosts(posts: List<PostEntity>) {
-        return
-    }
-
-    override suspend fun deletePosts() {
-        return
-    }
-
-    override suspend fun deletePost(post: PostEntity) {
-        return
-    }
-
-    override suspend fun addPost(post: PostEntity) {
-        return
     }
 }
