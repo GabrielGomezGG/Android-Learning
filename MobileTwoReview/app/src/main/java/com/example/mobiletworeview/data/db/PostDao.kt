@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.mobiletworeview.data.db.entity.PostEntity
+import com.example.mobiletworeview.exceptions.PostNoFound
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -16,6 +17,9 @@ interface PostDao {
 
     @Query("select * from post_entity")
     suspend fun getAllPost () : List<PostEntity>
+
+    @Query("select * from post_entity where :id = id")
+    suspend fun getPostById(id: Int) : PostEntity
 
     @Delete
     suspend fun deletePost(post : PostEntity)

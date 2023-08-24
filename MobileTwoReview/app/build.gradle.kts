@@ -61,11 +61,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
@@ -83,16 +78,29 @@ dependencies {
 
     //Corrutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
-    //Test LiveData
-    testImplementation ("androidx.arch.core:core-testing:2.2.0")
-
-    //mockk
-    testImplementation ("io.mockk:mockk:1.12.2")
 
     //Room
     implementation ("androidx.room:room-ktx:2.5.0")
     kapt ("androidx.room:room-compiler:2.5.0")
+
+    //TESTING
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+
+    //-- Room
+    testImplementation("androidx.room:room-testing:2.5.0")
+
+    //-- LiveData
+    testImplementation ("androidx.arch.core:core-testing:2.2.0")
+
+    //-- coroutines
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+
+    //-- mockk
+    testImplementation ("io.mockk:mockk:1.12.2")
 }
 
 kapt {
