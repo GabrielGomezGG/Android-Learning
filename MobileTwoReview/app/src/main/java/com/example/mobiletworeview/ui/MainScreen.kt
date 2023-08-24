@@ -1,5 +1,6 @@
 package com.example.mobiletworeview.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,10 +28,10 @@ import com.example.mobiletworeview.data.Post
 fun MainScreen(mainViewModel : MainViewModel) {
 
     LaunchedEffect(Unit){
+        Log.i("titi", "asdasdsadsad")
         mainViewModel.getPost()
     }
 
-//    val postResponse by mainViewModel.post.observeAsState(ResponseUiState.Loading)
     val postResponse by mainViewModel.posts.collectAsState()
 
     when(postResponse){
@@ -50,10 +51,6 @@ fun MainScreen(mainViewModel : MainViewModel) {
         }
         is ResponseUiState.Success -> {
 
-            //val posts  by (postResponse as ResponseUiState.Success).response.observeAsState()
-
-            //val post = (postResponse as ResponseUiState.Success<*>).response as List<Post>
-
             LazyColumn(
                 Modifier
                     .fillMaxSize()
@@ -71,11 +68,6 @@ fun MainScreen(mainViewModel : MainViewModel) {
                 items((postResponse as ResponseUiState.Success).response){
                     PostView(it)
                 }
-//                if (!posts.isNullOrEmpty()){
-//                    items(posts!!){
-//                        PostView(it)
-//                    }
-//                }
             }
         }
     }
