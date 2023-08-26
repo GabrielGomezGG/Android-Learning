@@ -31,7 +31,7 @@ class MainViewModel @Inject constructor(
                         _posts.value = ResponseUiState.Success(it)
                     }
             } catch (e: Exception) {
-                _posts.value = ResponseUiState.Error()
+                _posts.value = ResponseUiState.Error(e.toString())
             }
         }
     }

@@ -1,44 +1,77 @@
 package com.example.mobiletworeview.data
 
 import com.example.mobiletworeview.data.api.ApiService
-import com.example.mobiletworeview.fake.FakeApiService
-import com.example.mobiletworeview.fake.FakeApiServiceFail
-import com.example.mobiletworeview.fake.FakeDataSource
+import com.example.mobiletworeview.data.api.model.PostResponse
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 
 class ApiPostRepositoryTestResponse{
 
+    @RelaxedMockK
+    private lateinit var apiService: ApiService
+
     private lateinit var postRepository: PostRepository
-    private lateinit var fakeApiService: ApiService
 
-    @Test
-    fun getPostFromApiService() = runTest{
-
-        fakeApiService = FakeApiService()
-
-        postRepository = ApiPostRepository(fakeApiService)
-
-        val expected = FakeDataSource.fakeResponseOk.body()!!
-
-        val obtained = postRepository.getPost()
-
-        Assert.assertEquals(expected,obtained)
+    @Before
+    fun setUp(){
+        MockKAnnotations.init(this)
+        postRepository = ApiPostRepository(apiService)
     }
 
     @Test
-    fun getEmptyListFromApiServiceWhenApiError() = runTest {
+    fun getPostFromApiService() = runTest {
 
-        fakeApiService = FakeApiServiceFail()
+        val fakePost = listOf(
+            PostResponse(1,1,"title1","body1"),
+            PostResponse(2,2,"title2","body2"),
+            PostResponse(3,3,"title3","body3")
+        )
 
-        postRepository = ApiPostRepository(fakeApiService)
+        //Given
+        coEvery { apiService.getPosts().body() } returns fakePost
 
-        val expected = null
 
-        val obtained = postRepository.getPost()
+        //When
+        val actual = postRepository.getPost()
 
-        Assert.assertEquals(expected,obtained)
+        //Then
+        Assert.assertEquals(actual, fakePost)
+        Assert.assertEquals(actual?.first()?.id, 1)
+        Assert.assertEquals(actual?.size, 3)
+
     }
+
+//    @Test
+//    fun getPostFromApiService() = runTest{
+//
+//        fakeApiService = FakeApiService()
+//
+//        postRepository = ApiPostRepository(fakeApiService)
+//
+//        val expected = FakeDataSource.fakeResponseOk.body()!!
+//
+//        val obtained = postRepository.getPost()
+//
+//        Assert.assertEquals(expected,obtained)
+//    }
+//
+//    @Test
+//    fun getEmptyListFromApiServiceWhenApiError() = runTest {
+//
+//        fakeApiService = FakeApiServiceFail()
+//
+//        postRepository = ApiPostRepository(fakeApiService)
+//
+//        val expected = null
+//
+//        val obtained = postRepository.getPost()
+//
+//        Assert.assertEquals(expected,obtained)
+//    }
 
 }
