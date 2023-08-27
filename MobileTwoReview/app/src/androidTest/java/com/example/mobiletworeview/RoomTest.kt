@@ -7,7 +7,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.mobiletworeview.data.db.AppDataBase
 import com.example.mobiletworeview.data.db.PostDao
 import com.example.mobiletworeview.data.db.entity.PostEntity
-import com.example.mobiletworeview.exceptions.PostNoFound
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert

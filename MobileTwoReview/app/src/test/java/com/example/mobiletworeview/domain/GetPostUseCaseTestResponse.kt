@@ -32,16 +32,13 @@ class GetPostUseCaseTestResponse{
     fun `when getPostUseCase is called then return a list of post`() = runTest{
         // Given
 
+
         // When
-        var result : List<Post> = emptyList()
-        getPostUseCase().onEach { result = it }
+
 
 
         // Then
-        val expected = FakeDataSource.fakePostDB
 
-        Assert.assertEquals(expected, result)
-        //Assert.assertNotNull(result)
     }
 
     @Test

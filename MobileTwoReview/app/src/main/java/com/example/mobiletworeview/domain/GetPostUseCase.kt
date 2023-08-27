@@ -6,6 +6,7 @@ import com.example.mobiletworeview.data.PostRepository
 import com.example.mobiletworeview.data.db.PostDBRepository
 import com.example.mobiletworeview.data.toPostEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
@@ -18,11 +19,19 @@ class GetPostUseCase @Inject constructor(
 
     suspend operator fun invoke(): Flow<List<Post>> {
 
+        val flowPost = flow{
             val posts = postRepository.getPost() ?: emptyList()
-
             if (postDBRepository.getAllPost().isEmpty()) {
                 postDBRepository.setPosts(posts.map { it.toPostEntity() })
             }
-        return postDBRepository.getPostFromDB()
+            emit(posts)
+        }
+
+
+        val postsDB = postDBRepository.getPostFromDB().combine(flowPost){
+            postDB, post -> postDB
+        }
+
+        return postsDB
     }
 }
