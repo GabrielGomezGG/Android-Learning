@@ -9,8 +9,26 @@ fun PostResponse.toPostEntity() : PostEntity{
     )
 }
 
+fun PostResponse.toPost() : Post{
+    return Post(
+        id, userId, title, body
+    )
+}
+
 fun PostEntity.toPost() : Post{
     return Post(
+        id, userId, title, body
+    )
+}
+
+fun Post.toPostEntity() : PostEntity{
+    return PostEntity(
+        id, userId, title, body
+    )
+}
+
+fun Post.toPostResponse() : PostResponse{
+    return PostResponse(
         id, userId, title, body
     )
 }

@@ -3,6 +3,7 @@ package com.example.mobiletworeview.domain
 import android.util.Log
 import com.example.mobiletworeview.data.Post
 import com.example.mobiletworeview.data.PostRepository
+import com.example.mobiletworeview.data.api.model.PostResponse
 import com.example.mobiletworeview.data.db.PostDBRepository
 import com.example.mobiletworeview.data.toPostEntity
 import kotlinx.coroutines.flow.Flow
@@ -17,11 +18,14 @@ class GetPostUseCase @Inject constructor(
     private val postDBRepository: PostDBRepository
 ) {
 
+
     suspend operator fun invoke(): Flow<List<Post>> {
 
+        var posts = emptyList<PostResponse>()
+
         val flowPost = flow{
-            val posts = postRepository.getPost() ?: emptyList()
             if (postDBRepository.getAllPost().isEmpty()) {
+                posts = postRepository.getPost() ?: emptyList()
                 postDBRepository.setPosts(posts.map { it.toPostEntity() })
             }
             emit(posts)
