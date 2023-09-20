@@ -43,7 +43,7 @@ fun MainScreen(mainViewModel: MainViewModel) {
     
     LazyColumn(){
         items(countries){
-            Text(text = it.name)
+            Text(text = "Nombre: ${it.name} | ${it.emoji} ")
         }
     }
 }
