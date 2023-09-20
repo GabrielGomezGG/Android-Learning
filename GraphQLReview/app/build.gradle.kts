@@ -1,6 +1,13 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.apollographql.apollo3").version("3.8.0")
+}
+
+apollo {
+    service("service") {
+        packageName.set("com.example.graphqlreview")
+    }
 }
 
 android {
@@ -66,4 +73,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    //apollo client
+    implementation("com.apollographql.apollo3:apollo-runtime:3.8.0")
 }
