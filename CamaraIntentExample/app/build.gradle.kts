@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.timerexample"
+    namespace = "com.example.camaraintentexample"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.timerexample"
+        applicationId = "com.example.camaraintentexample"
         minSdk = 27
         targetSdk = 33
         versionCode = 1
@@ -66,12 +66,4 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-    //kotlin corrutines
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
-    //testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0'
-
-    //livedata compose
-    implementation ("androidx.compose.runtime:runtime-livedata:1.3.1")
-    //testImplementation "androidx.arch.core:core-testing:2.1.0"
 }
