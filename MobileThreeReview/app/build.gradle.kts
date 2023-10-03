@@ -69,6 +69,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    //Accompanist-Permissions
+    implementation ("com.google.accompanist:accompanist-permissions:0.33.2-alpha")
 
     //Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.44")
