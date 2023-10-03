@@ -14,10 +14,18 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.mobilethreereview.ui.MainViewModel
 import com.example.mobilethreereview.ui.theme.MobileThreeReviewTheme
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 
 class MainActivity : ComponentActivity() {
 
@@ -31,36 +39,60 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-                    val camaraPermission = rememberLauncherForActivityResult(
-                        contract = ActivityResultContracts.RequestPermission(),
-                        onResult = { isGranted ->
-                            mainViewModel.permissionList.put(Manifest.permission.CAMERA, isGranted)
-                        }
-                    )
-
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-                        Column() {
-                            mainViewModel.permissionList.forEach {
-                                Text(text = "Permission: ${it.key}")
-                            }
-                            Button(onClick = {
-                                camaraPermission.launch(
-                                    Manifest.permission.CAMERA
-                                )
-                            }) {
-                                Text(text = "Permission Camara")
-                            }
-                            Button(onClick = {
-                                camaraPermission.launch(
-                                    Manifest.permission.CALL_PHONE
-                                )
-                            }) {
-                                Text(text = "Permission Call Phone")
-                            }
-                        }
-                    }
+//                    PermissionNormal(mainViewModel = mainViewModel)
+                    PermissionAccompanist()
                 }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun PermissionAccompanist() {
+    val cameraPermission = rememberPermissionState(
+        permission = Manifest.permission.CAMERA
+    )
+
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column {
+            Button(onClick = {
+                cameraPermission.launchPermissionRequest()
+            }) {
+                Text(text = "Permission Camara")
+            }
+            Text(text = cameraPermission.status.isGranted.toString())
+        }
+    }
+}
+
+@Composable
+fun PermissionNormal(mainViewModel:MainViewModel){
+    val camaraPermission = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { isGranted ->
+            mainViewModel.permissionList.put(Manifest.permission.CAMERA, isGranted)
+        }
+    )
+
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+        Column() {
+            mainViewModel.permissionList.forEach {
+                Text(text = "Permission: ${it.key}")
+            }
+            Button(onClick = {
+                camaraPermission.launch(
+                    Manifest.permission.CAMERA
+                )
+            }) {
+                Text(text = "Permission Camara")
+            }
+            Button(onClick = {
+                camaraPermission.launch(
+                    Manifest.permission.CALL_PHONE
+                )
+            }) {
+                Text(text = "Permission Call Phone")
             }
         }
     }
