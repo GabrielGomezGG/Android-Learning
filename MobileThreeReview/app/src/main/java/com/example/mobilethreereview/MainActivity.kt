@@ -1,6 +1,7 @@
 package com.example.mobilethreereview
 
 import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,7 +9,14 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.compose.foundation.Image
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,14 +31,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
 import com.example.mobilethreereview.ui.MainViewModel
 import com.example.mobilethreereview.ui.theme.MobileThreeReviewTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.rememberPermissionState
+import kotlinx.coroutines.currentCoroutineContext
 
 class MainActivity : ComponentActivity() {
 
@@ -46,11 +56,49 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    PermissionNormal(mainViewModel = mainViewModel)
 //                    PermissionAccompanist()
-                    GetContentExample()
+//                    GetContentExample()
+                    val context by remember {
+                        mutableStateOf(this)
+                    }
+                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                        Text(text = "titi")
+                    }else{
+                        Text(text = "asdasdasdas")
+                    }
+//                    Animations()
                 }
             }
         }
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun Animations() {
+
+    var expanded by remember {
+        mutableStateOf(false)
+    }
+
+    Column(modifier = Modifier) {
+        Text(
+            text = "SDSADsasdadsadsadasdasddsdadsasadadsasdsadsaddsadssadadssdasdasadasdasddadsadsadsadsadsa" +
+                    "SDSADsasdadsadsadasdasddsdadsasadadsasdsadsaddsadssadadssdasdasadasdasddadsadsadsadsadsa" +
+                    "SDSADsasdadsadsadasdasddsdadsasadadsasdsadsaddsadssadadssdasdasadasdasddadsadsadsadsadsa",
+            modifier = Modifier
+                .animateContentSize(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        delayMillis = 50,
+                        easing = LinearOutSlowInEasing
+                    )
+                )
+                .clickable { expanded = !expanded }
+            ,
+            maxLines = if (!expanded) 1 else 50
+        )
+    }
+
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -81,7 +129,8 @@ fun PermissionAccompanist() {
 }
 
 @Composable
-fun PermissionNormal(mainViewModel:MainViewModel){
+fun PermissionNormal(mainViewModel: MainViewModel) {
+
     val camaraPermission = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
         onResult = { isGranted ->
@@ -89,7 +138,7 @@ fun PermissionNormal(mainViewModel:MainViewModel){
         }
     )
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column() {
             mainViewModel.permissionList.forEach {
                 Text(text = "Permission: ${it.key}")
@@ -115,9 +164,10 @@ fun PermissionNormal(mainViewModel:MainViewModel){
 @Composable
 fun GetContentExample() {
     var imageUri by remember { mutableStateOf<Uri?>(null) }
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        imageUri = uri
-    }
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            imageUri = uri
+        }
     Column {
         Button(onClick = { launcher.launch("image/*") }) {
             Text(text = "Load Image")
