@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -21,6 +23,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileThreeReview"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCPj0hmVS-0SKTDWGFNCgPdkQSFuQnD4Ps" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
