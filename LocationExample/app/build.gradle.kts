@@ -69,4 +69,7 @@ dependencies {
 
     //Location
     implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+    //Accompanist-Permissions
+    implementation ("com.google.accompanist:accompanist-permissions:0.33.2-alpha")
 }
