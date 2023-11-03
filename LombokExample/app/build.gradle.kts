@@ -1,16 +1,26 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+
+    id ("org.jetbrains.kotlin.kapt")
 }
+
+//kapt {
+//    keepJavacAnnotationProcessors = true
+//}
+//
+//kotlinLombok {
+//    lombokConfigurationFile(file("lombok.config"))
+//}
 
 android {
     namespace = "com.example.lombokexample"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.lombokexample"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -30,11 +40,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -50,6 +60,9 @@ android {
 }
 
 dependencies {
+
+    implementation ("com.thinkinglogic.builder:kotlin-builder-annotation:1.2.1")
+    kapt ("com.thinkinglogic.builder:kotlin-builder-processor:1.2.1")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

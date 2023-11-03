@@ -1,16 +1,15 @@
 package com.example.lombokexample
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.lombokexample.ui.theme.LombokExampleTheme
+import com.thinkinglogic.builder.annotation.Builder
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,25 +21,19 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    val person = PersonBuilder().age(1).name("titi").build()
+
+                    val school = SchoolBuilder().name("titi").build()
+
+                    Log.i("titi", school.toString())
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+@Builder
+data class Person(val name: String, val age: Int)
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    LombokExampleTheme {
-        Greeting("Android")
-    }
-}
+@Builder
+data class School(val name: String, val address: String?, val students: List<Person>?)
