@@ -15,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.example.timerexample.ui.theme.TimerExampleTheme
+import java.util.Timer
 
 class MainActivity : ComponentActivity() {
 
@@ -29,9 +30,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val contador by mainViewModel.count.collectAsState(initial = 0)
-                    val activo by mainViewModel.active.collectAsState(initial = true)
-                    MainScreen(contador,activo) { mainViewModel.stopFlow() }
+
+                    MainScreen()
                 }
             }
         }
@@ -39,13 +39,28 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(titi: Int, activo: Boolean, onStop: () -> Unit) {
+fun MainScreen() {
+
+    val timer = Timer()
+
+    val titi = Titi()
+
+    val wea by titi.counterFlow.collectAsState(initial = 0)
 
     Column {
-        Text(text = titi.toString())
-        Text(text = activo.toString())
-        Button(onClick = { onStop() }) {
-            Text(text = "Stop")
+
+        Text(text = wea.toString())
+
+        Button(onClick = {
+            timer.scheduleAtFixedRate(titi, 0, 1000)
+        }) {
+            Text(text = "Start")
+        }
+
+        Button(onClick = {
+            timer.cancel()
+        }) {
+            Text(text = "Cancel")
         }
     }
 

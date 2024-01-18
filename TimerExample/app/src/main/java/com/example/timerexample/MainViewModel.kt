@@ -1,5 +1,6 @@
 package com.example.timerexample
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
@@ -8,55 +9,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import java.util.TimerTask
 
 class MainViewModel : ViewModel() {
 
-    private val _count = MutableStateFlow(0)
-    val count: Flow<Int> = _count.asStateFlow()
-
-    private val _active = MutableStateFlow(true)
-    val active: Flow<Boolean> = _active.asStateFlow()
-
-    val tutu = Tutu()
-
-    init {
-        viewModelScope.launch {
-            tutu.countFlow.collect {
-                _count.value = it
-            }
-
-            tutu.activeFlow.collect {
-                _active.value = it
-            }
-        }
-    }
-
-    fun stopFlow() {
-        tutu.stop()
-    }
-
 }
 
-class Tutu {
+class Titi : TimerTask(){
 
-    private var active = true
+    var counterFlow = MutableStateFlow(0)
 
-    private var count = 0
-
-    var countFlow = flow {
-        while (active) {
-            count++
-            emit(count)
-            delay(1000)
+    private var counter = 0
+    override fun run() {
+        Log.d("Titi", "counter = $counter")
+        counter++
+        counterFlow = flow {
+            emit(counter)
         }
-    }
-
-    var activeFlow = flow {
-        emit(active)
-    }
-
-    fun stop() {
-        active = !active
     }
 
 }
