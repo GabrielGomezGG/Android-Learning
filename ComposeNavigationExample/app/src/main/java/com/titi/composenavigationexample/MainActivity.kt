@@ -3,13 +3,20 @@ package com.titi.composenavigationexample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.titi.composenavigationexample.destinations.WeaDestination
 import com.titi.composenavigationexample.ui.theme.ComposeNavigationExampleTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,25 +29,40 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    DestinationsNavHost(navGraph = NavGraphs.root)
                 }
             }
         }
     }
 }
 
+@RootNavGraph(start = true)
+@Destination
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
+fun MainScreen(
+    navigator: DestinationsNavigator
+) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     )
+    {
+        Button(onClick = {
+            navigator.navigate(WeaDestination)
+        }) {
+            Text(text = "Navigate to Wea")
+        }
+    }
 }
 
-@Preview(showBackground = true)
+@Destination
 @Composable
-fun GreetingPreview() {
-    ComposeNavigationExampleTheme {
-        Greeting("Android")
+fun Wea() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    )
+    {
+        Text(text = "Wea")
     }
 }
