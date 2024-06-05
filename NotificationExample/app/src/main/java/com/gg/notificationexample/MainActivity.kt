@@ -1,16 +1,28 @@
 package com.gg.notificationexample
 
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.gg.notificationexample.ui.theme.NotificationExampleTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,30 +30,62 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
     setContent {
+
+      val context = LocalContext.current
+
+      createNotificationChannel(context)
+
       NotificationExampleTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-          Greeting(
-            name = "Android",
-            modifier = Modifier.padding(innerPadding)
-          )
+
+          Box(
+              modifier = Modifier.fillMaxSize(),
+              contentAlignment = Alignment.Center
+              ) {
+              Button(onClick = {
+                setNotification(context)
+              }) {
+                Text("Show Notification")
+              }
+          }
+
         }
       }
     }
   }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-  Text(
-    text = "Hello $name!",
-    modifier = modifier
-  )
+@SuppressLint("MissingPermission", "NotificationPermission")
+fun setNotification(
+  context: Context,
+){
+  var builder = NotificationCompat.Builder(context, "titi")
+    .setSmallIcon(android.R.drawable.dark_header)
+    .setContentTitle("titi title")
+    .setContentText("titi content")
+    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+//  with(NotificationManagerCompat.from(context)){
+//    notify(1, builder.build())
+//  }
+  NotificationManagerCompat.from(context).notify(1, builder.build())
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-  NotificationExampleTheme {
-    Greeting("Android")
+private fun createNotificationChannel(
+  context: Context
+) {
+  // Create the NotificationChannel, but only on API 26+ because
+  // the NotificationChannel class is not in the Support Library.
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    val name = "titi channel"
+    val descriptionText = "Titi description text"
+    val importance = NotificationManager.IMPORTANCE_DEFAULT
+    val channel = NotificationChannel("titi", name, importance).apply {
+      description = descriptionText
+    }
+    // Register the channel with the system.
+    val notificationManager: NotificationManager =
+      context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    notificationManager.createNotificationChannel(channel)
   }
 }
