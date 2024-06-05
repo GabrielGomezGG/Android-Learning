@@ -3,7 +3,9 @@ package com.gg.notificationexample
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -59,11 +61,21 @@ class MainActivity : ComponentActivity() {
 fun setNotification(
   context: Context,
 ){
+
+  val intent = Intent(context, MainActivity::class.java).apply {
+    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  }
+  val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
   var builder = NotificationCompat.Builder(context, "titi")
-    .setSmallIcon(android.R.drawable.dark_header)
+    .setSmallIcon(R.drawable.ic_launcher_foreground)
     .setContentTitle("titi title")
     .setContentText("titi content")
     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+    .setContentIntent(pendingIntent)
+    .setAutoCancel(true)
 
 //  with(NotificationManagerCompat.from(context)){
 //    notify(1, builder.build())
