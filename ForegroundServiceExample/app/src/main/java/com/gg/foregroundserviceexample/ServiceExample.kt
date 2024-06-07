@@ -2,6 +2,7 @@ package com.gg.foregroundserviceexample
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -17,7 +18,6 @@ class ServiceExample : Service() {
 
   override fun onCreate() {
     super.onCreate()
-
     notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
   }
 
@@ -32,24 +32,34 @@ class ServiceExample : Service() {
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
+    val state = intent?.getStringExtra("state")
+
     if (!isServiceStarted) {
-      makeForeground()
+      makeForeground(state ?: "null")
       isServiceStarted = true
     }
 
     return START_STICKY
   }
 
-  private fun makeForeground() {
+  private fun makeForeground(state: String) {
     createChannel()
 
+    // Accion que sucede despues de tocar la notificacion
+    val intent = Intent(applicationContext, MainActivity::class.java).apply {
+      flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    }
+    val pendingIntent: PendingIntent =
+      PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
     val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-      .setContentTitle("Foreground Service Example")
-      .setContentText("This is a foreground service example")
+      .setContentTitle("Estado del pedido")
+      .setContentText("state: $state")
       .setSmallIcon(R.drawable.ic_launcher_foreground)
       .setPriority(NotificationCompat.PRIORITY_HIGH)
-      .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+      .setCategory(NotificationCompat.CATEGORY_STATUS)
       .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+      .setContentIntent(pendingIntent)
       .build()
 
     startForeground(1, notification)
@@ -70,10 +80,14 @@ class ServiceExample : Service() {
     const val CHANNEL_ID = "ForegroundServiceExample"
     const val CHANNEL_NAME = "Foreground Service Example"
 
-    fun startService(context: Context) {
+    fun startService(context: Context, state: String) {
+      stopService(context)
       val startIntent = Intent(context, ServiceExample::class.java)
+        .apply {
+          putExtra("state", state)
+        }
 
-      if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         context.startForegroundService(startIntent)
       } else {
         context.startService(startIntent)
@@ -84,7 +98,5 @@ class ServiceExample : Service() {
       val stopIntent = Intent(context, ServiceExample::class.java)
       context.stopService(stopIntent)
     }
-
   }
-
 }

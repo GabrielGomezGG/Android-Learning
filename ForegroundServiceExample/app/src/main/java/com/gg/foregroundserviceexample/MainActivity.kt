@@ -29,6 +29,8 @@ class MainActivity : ComponentActivity() {
 
           val context = LocalContext.current
 
+          val randomsTexts = listOf("AAAAAAAA", "BBBBBBBB", "CCCCCCCC", "DDDDDDDD", "EEEEEEEE")
+
           Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -37,7 +39,7 @@ class MainActivity : ComponentActivity() {
               .padding(innerPadding)
           ) {
             Button(onClick = {
-              ServiceExample.startService(context)
+              ServiceExample.startService(context, randomsTexts.random())
             }) {
               Text("Start Service")
             }
