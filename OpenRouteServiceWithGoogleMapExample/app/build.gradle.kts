@@ -1,6 +1,13 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+
+    //Dagger Hilt
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -18,6 +25,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val properties = Properties()
+        properties.load(FileInputStream(rootProject.file("local.properties")))
+
+        buildConfigField("String", "OPEN_ROUTE_SERVICE_API", properties.getProperty("OPEN_ROUTE_SERVICE_API"))
     }
 
     buildTypes {
@@ -66,4 +78,15 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Retrofit2
+    implementation (libs.converter.gson)
+    implementation (libs.retrofit)
+
+    //Dagger Hilt
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+
 }
