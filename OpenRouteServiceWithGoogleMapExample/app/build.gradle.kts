@@ -50,6 +50,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -87,6 +88,16 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    //Mock web Server
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
+
+    //kotlin corrutines
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+
+    //Google maps
+    implementation ("com.google.maps.android:maps-compose:2.11.0")
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
 
 
 }
