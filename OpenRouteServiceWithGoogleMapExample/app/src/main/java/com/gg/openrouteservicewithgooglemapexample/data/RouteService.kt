@@ -12,8 +12,12 @@ import retrofit2.http.POST
 
 interface RouteService {
 
+    companion object {
+        const val BASE_URL = "https://api.openrouteservice.org"
+    }
+
     @Headers("Authorization: ${BuildConfig.OPEN_ROUTE_SERVICE_API}")
-    @POST("/v2/matrix/driving-car")
+    @POST("$/v2/matrix/driving-car")
     suspend fun getDistance(
         @Body bodyApi: BodyApi
     ): Response<ResponseApi>

@@ -30,6 +30,7 @@ android {
         properties.load(FileInputStream(rootProject.file("local.properties")))
 
         buildConfigField("String", "OPEN_ROUTE_SERVICE_API", properties.getProperty("OPEN_ROUTE_SERVICE_API"))
+        buildConfigField("String", "GOOGLE_MAP_PLATFORM", properties.getProperty("GOOGLE_MAP_PLATFORM"))
     }
 
     buildTypes {

@@ -66,11 +66,19 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        MyMapp(
+                        GoogleMap(
                             modifier = Modifier
                                 .fillMaxSize(),
                             cameraPositionState = cameraPositionState,
-                        )
+                            onMapClick = {
+                                marker = it
+                            }
+                        ) {
+                            Marker(
+                                state = MarkerState(position = marker),
+                                title = "titulo del lugar",
+                            )
+                        }
 
                         Button(
                             onClick = {
@@ -99,19 +107,19 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun MyMapp(
-    modifier: Modifier = Modifier,
-    cameraPositionState: CameraPositionState,
-) {
-    GoogleMap(
-        modifier = modifier,
-        cameraPositionState = cameraPositionState,
-    ) {
-        Marker(
-            state = MarkerState(position = cameraPositionState.position.target),
-            title = "titulo del lugar",
-        )
-    }
-}
+//@Composable
+//fun MyMapp(
+//    modifier: Modifier = Modifier,
+//    cameraPositionState: CameraPositionState,
+//) {
+//    GoogleMap(
+//        modifier = modifier,
+//        cameraPositionState = cameraPositionState,
+//    ) {
+//        Marker(
+//            state = MarkerState(position = cameraPositionState.position.target),
+//            title = "titulo del lugar",
+//        )
+//    }
+//}
 
