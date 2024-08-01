@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MultiModuleExample"
 include(":app")
+include(":home")
