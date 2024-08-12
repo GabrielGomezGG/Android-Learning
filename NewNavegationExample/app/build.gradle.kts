@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.gg.multimoduleexample"
+    namespace = "com.gg.newnavegationexample"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.gg.multimoduleexample"
+        applicationId = "com.gg.newnavegationexample"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -66,7 +66,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    //Home module
-//    implementation(project(":home"))
 }

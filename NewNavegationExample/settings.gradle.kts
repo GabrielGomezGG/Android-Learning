@@ -19,9 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MultiModuleExample"
+rootProject.name = "NewNavegationExample"
 include(":app")
-include(":home")
-include(":ui:home")
-include(":ui:setting")
-include(":core")
