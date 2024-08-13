@@ -1,4 +1,4 @@
-query CountriesQuery {
+query CountryList {
     countries {
         emoji
         name
